@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprint IT — Primer Empleo · Arcos Dorados × Voolkia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --arcos: #DA291C;
+  --arcos-soft: #fff0ef;
+  --dark: #0D1117;
+  --mid: #1C2333;
+  --text: #E6EDF3;
+  --muted: #8B949E;
+  --accent: #F0A500;
+  --accent-soft: #fff8e6;
+  --green: #3FB950;
+  --border: rgba(255,255,255,0.08);
+  --card-bg: rgba(255,255,255,0.04);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 48px;
+  background: rgba(13,17,23,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand { display: flex; align-items: center; gap: 12px; }
+.nav-brand span { font-size: 13px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.nav-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-tag {
+  font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  background: var(--arcos); color: #fff; padding: 5px 12px; border-radius: 4px;
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 120px 48px 80px;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 80% 60% at 60% 30%, rgba(218,41,28,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 50% at 20% 80%, rgba(240,165,0,0.05) 0%, transparent 50%);
+}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0; opacity: 0.03;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+.hero-content { position: relative; z-index: 1; max-width: 820px; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 28px;
+}
+.hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--accent); }
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(52px, 7vw, 96px);
+  line-height: 1.0; letter-spacing: -.02em; margin-bottom: 8px;
+}
+h1 em { font-style: italic; color: var(--accent); }
+.hero-sub {
+  font-size: clamp(18px, 2.5vw, 24px);
+  color: var(--muted); font-weight: 300; margin-bottom: 40px; max-width: 660px;
+}
+.hero-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 48px; }
+.pill {
+  font-size: 12px; font-weight: 500; letter-spacing: .04em;
+  padding: 7px 16px; border-radius: 100px;
+  border: 1px solid var(--border); color: var(--muted); background: var(--card-bg);
+}
+.pill.accent { border-color: rgba(240,165,0,.3); color: var(--accent); background: rgba(240,165,0,.05); }
+.pill.arcos { border-color: rgba(218,41,28,.35); color: #ff7a6f; background: rgba(218,41,28,.06); }
+.hero-scroll {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase;
+}
+.scroll-line { width: 40px; height: 1px; background: var(--muted); }
+
+section { padding: 100px 48px; }
+.section-label {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px;
+}
+.section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--muted); }
+h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.1; letter-spacing: -.02em; margin-bottom: 48px;
+}
+h2 em { font-style: italic; color: var(--accent); }
+h3 { font-family: 'DM Serif Display', serif; font-size: 24px; margin-bottom: 12px; }
+
+#contexto { background: linear-gradient(180deg, var(--dark) 0%, var(--mid) 100%); border-top: 1px solid var(--border); }
+.context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.context-text p { color: var(--muted); font-size: 17px; margin-bottom: 20px; }
+.context-text p:last-child { font-style: italic; color: var(--text); font-size: 18px; border-left: 2px solid var(--accent); padding-left: 20px; }
+.stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 16px; }
+.stat-number { font-family: 'DM Serif Display', serif; font-size: 56px; color: var(--accent); line-height: 1; }
+.stat-label { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+#valor { background: var(--mid); border-top: 1px solid var(--border); }
+.valor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.valor-col { padding: 40px; }
+.valor-col:first-child { background: rgba(218,41,28,.06); border-right: 1px solid var(--border); }
+.valor-col:last-child { background: rgba(240,165,0,.04); }
+.valor-col-title { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 6px 14px; border-radius: 6px; display: inline-block; margin-bottom: 28px; }
+.valor-col:first-child .valor-col-title { background: rgba(218,41,28,.15); color: #ff6b6b; }
+.valor-col:last-child .valor-col-title { background: rgba(240,165,0,.15); color: var(--accent); }
+.valor-item { display: flex; gap: 14px; margin-bottom: 22px; align-items: flex-start; }
+.valor-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex-shrink: 0; margin-top: 10px; }
+.valor-col:first-child .valor-dot { background: #ff6b6b; }
+.valor-col:last-child .valor-dot { background: var(--accent); }
+.valor-item strong { display: block; font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+.valor-item p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+#perfil { background: var(--dark); border-top: 1px solid var(--border); }
+.perfil-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.perfil-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 28px; transition: border-color .3s, transform .3s; }
+.perfil-card:hover { border-color: rgba(240,165,0,.4); transform: translateY(-4px); }
+.perfil-card.highlight { border-color: rgba(240,165,0,.3); background: rgba(240,165,0,.04); }
+.perfil-card.arcos { border-color: rgba(218,41,28,.3); background: rgba(218,41,28,.04); }
+.perfil-icon { font-size: 24px; margin-bottom: 14px; }
+.perfil-card h4 { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.perfil-card p { font-size: 14px; color: var(--text); line-height: 1.65; }
+.perfil-card ul { list-style: none; padding: 0; margin: 0; }
+.perfil-card li { font-size: 13.5px; color: var(--text); line-height: 1.55; padding: 6px 0; border-bottom: 1px dashed var(--border); display: flex; gap: 8px; }
+.perfil-card li:last-child { border-bottom: none; }
+.perfil-card li::before { content: '·'; color: var(--accent); flex-shrink: 0; }
+
+.jd-meta { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; padding: 18px 22px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; }
+.jd-meta span { font-size: 13px; color: var(--muted); }
+.jd-meta b { color: var(--text); font-weight: 600; margin-right: 4px; }
+
+#seleccion { background: var(--mid); border-top: 1px solid var(--border); }
+.canales-title { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 18px; }
+.canales-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 64px; align-items: stretch; }
+.canal-group { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; }
+.canal-group-label { font-size: 11px; color: var(--accent); letter-spacing: .14em; text-transform: uppercase; font-weight: 600; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
+.canal-item { padding: 14px 0; border-bottom: 1px dashed var(--border); }
+.canal-item:last-child { border-bottom: none; padding-bottom: 0; }
+.canal-item:first-of-type { padding-top: 0; }
+.canal-item b { display: block; font-size: 15px; color: var(--text); margin-bottom: 4px; font-weight: 600; }
+.canal-item span { font-size: 13px; color: var(--muted); line-height: 1.55; display: block; }
+.canal-item .item-flag { display: inline-block; font-size: 10px; color: var(--accent); letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: 2px 8px; border: 1px solid rgba(240,165,0,.3); border-radius: 100px; margin-left: 6px; vertical-align: middle; }
+
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step { display: grid; grid-template-columns: 80px 1fr; gap: 32px; padding: 36px 0; border-bottom: 1px solid var(--border); position: relative; }
+.step:last-child { border-bottom: none; }
+.step-num { font-family: 'DM Serif Display', serif; font-size: 64px; line-height: 1; color: rgba(255,255,255,.06); text-align: right; padding-top: 4px; }
+.step-content { display: flex; flex-direction: column; justify-content: center; }
+.step-tag { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.step h3 { font-size: 22px; margin-bottom: 10px; }
+.step p { font-size: 15px; color: var(--muted); max-width: 700px; line-height: 1.7; }
+.step-highlight { background: rgba(240,165,0,.08); border: 1px solid rgba(240,165,0,.2); border-radius: 8px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: var(--accent); font-style: italic; }
+.step-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+#programa { background: var(--dark); border-top: 1px solid var(--border); }
+.timeline { position: relative; }
+.timeline::before { content: ''; position: absolute; left: 31px; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, var(--accent) 0%, var(--border) 100%); }
+.fase { display: grid; grid-template-columns: 64px 1fr; gap: 40px; margin-bottom: 60px; position: relative; }
+.fase:last-child { margin-bottom: 0; }
+.fase-marker { display: flex; flex-direction: column; align-items: center; gap: 0; position: relative; z-index: 1; }
+.fase-dot { width: 40px; height: 40px; border-radius: 50%; background: var(--mid); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--accent); flex-shrink: 0; }
+.fase-body { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 36px; transition: border-color .3s; }
+.fase-body:hover { border-color: rgba(240,165,0,.3); }
+.fase-timing { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.fase-body h3 { font-size: 22px; margin-bottom: 16px; }
+.fase-body p { font-size: 15px; color: var(--muted); margin-bottom: 16px; line-height: 1.7; }
+.fase-quote { background: rgba(240,165,0,.06); border-left: 2px solid var(--accent); padding: 14px 18px; border-radius: 0 8px 8px 0; margin-top: 16px; font-size: 14px; color: var(--text); font-style: italic; }
+.fase-items { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+.fase-item { background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--muted); display: flex; align-items: flex-start; gap: 8px; }
+.fase-item::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+
+#evaluacion { background: var(--mid); border-top: 1px solid var(--border); }
+.eval-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.eval-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 28px; position: relative; overflow: hidden; }
+.eval-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.eval-card:nth-child(1)::before { background: var(--muted); }
+.eval-card:nth-child(2)::before { background: var(--accent); }
+.eval-card:nth-child(3)::before { background: var(--green); }
+.eval-num { font-family: 'DM Serif Display', serif; font-size: 56px; line-height: 1; opacity: .15; position: absolute; top: 16px; right: 22px; color: var(--text); }
+.eval-timing { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.eval-card:nth-child(2) .eval-timing { color: var(--accent); }
+.eval-card:nth-child(3) .eval-timing { color: var(--green); }
+.eval-card h3 { font-size: 18px; margin-bottom: 12px; }
+.eval-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+.eval-note { margin-top: 48px; padding: 28px 32px; background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: 12px; font-size: 16px; color: var(--muted); font-style: italic; text-align: center; }
+
+#comercial { background: var(--dark); border-top: 1px solid var(--border); }
+.comercial-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--card-bg); }
+.comercial-cell { padding: 32px 28px; border-right: 1px solid var(--border); }
+.comercial-cell:last-child { border-right: none; }
+.comercial-cell b { display: block; font-family: 'DM Serif Display', serif; font-size: 56px; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+.comercial-cell:nth-child(2) b { color: var(--arcos); }
+.comercial-cell .desc { color: var(--muted); font-size: 14px; line-height: 1.6; }
+.comercial-note { margin-top: 24px; padding: 22px 26px; background: rgba(240,165,0,.06); border-left: 2px solid var(--accent); border-radius: 0 12px 12px 0; color: var(--text); font-size: 15px; line-height: 1.7; }
+.comercial-note b { color: var(--accent); }
+
+#voolkia { background: var(--mid); border-top: 1px solid var(--border); }
+.voolkia-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 48px; }
+.voolkia-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 28px; transition: border-color .3s, transform .3s; }
+.voolkia-card:hover { border-color: rgba(240,165,0,.4); transform: translateY(-4px); }
+.voolkia-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+.voolkia-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+.cta-block { padding: 80px 48px; background: linear-gradient(135deg, rgba(218,41,28,.08) 0%, rgba(240,165,0,.06) 100%); border-top: 1px solid var(--border); text-align: center; }
+.cta-block h2 { margin-bottom: 16px; }
+.cta-block p { font-size: 18px; color: var(--muted); max-width: 620px; margin: 0 auto 36px; line-height: 1.7; }
+.cta-badge { display: inline-flex; align-items: center; gap: 12px; background: rgba(255,255,255,.06); border: 1px solid var(--border); border-radius: 100px; padding: 14px 28px; font-size: 14px; color: var(--muted); font-style: italic; }
+
+footer { padding: 32px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+.fade-up { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 60px; }
+  section { padding: 70px 20px; }
+  .context-grid, .valor-grid, .perfil-grid, .eval-grid, .voolkia-grid, .canales-grid { grid-template-columns: 1fr; }
+  .comercial-grid { grid-template-columns: 1fr 1fr; }
+  .comercial-cell:nth-child(2) { border-right: none; }
+  .comercial-cell { border-bottom: 1px solid var(--border); }
+  .fase { grid-template-columns: 1fr; }
+  .timeline::before { display: none; }
+  .fase-marker { display: none; }
+  .fase-items { grid-template-columns: 1fr; }
+  .step { grid-template-columns: 1fr; }
+  .step-num { display: none; }
+  .cta-block { padding: 60px 20px; }
+  footer { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <span>Voolkia</span>
+    <div class="nav-dot"></div>
+    <span>Arcos Dorados</span>
+  </div>
+  <div class="nav-links">
+    <a href="#contexto">Contexto</a>
+    <a href="#valor">Valor</a>
+    <a href="#perfil">Perfil</a>
+    <a href="#seleccion">Selección</a>
+    <a href="#programa">Programa</a>
+    <a href="#comercial">Modelo</a>
+  </div>
+  <div class="nav-tag">Confidencial · 2026</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Programa de Primer Empleo · Infraestructura</div>
+    <h1>Sprint <em>IT</em><br>Primer Empleo</h1>
+    <p class="hero-sub">Talento joven, formado y acompañado para sumarse al equipo de Infraestructura de Arcos Dorados desde el día uno.</p>
+    <div class="hero-pills">
+      <span class="pill accent">4 meses</span>
+      <span class="pill">Full-time · 9 a 18 hs</span>
+      <span class="pill">Olivos · Híbrido</span>
+      <span class="pill">Infraestructura</span>
+      <span class="pill arcos">Mes 1 · −50%</span>
+      <span class="pill">Relación laboral desde el día uno</span>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Explorar el programa
+    </div>
+  </div>
+</div>
+
+<!-- CONTEXTO -->
+<section id="contexto">
+  <div class="section-label">01 · Contexto</div>
+  <div class="context-grid fade-up">
+    <div class="context-text">
+      <h2>Construir<br>el equipo IT<br>que <em>viene.</em></h2>
+      <p>El mercado de talento IT senior está saturado, caro y escaso. La alternativa no es esperar a que aparezca — es formar. Sprint IT Primer Empleo es el programa de Voolkia para identificar jóvenes con verdadero potencial técnico y actitudinal, formarlos en herramientas reales y acompañarlos hasta que estén productivos dentro del equipo de Infraestructura de Arcos.</p>
+      <p>Es un programa de impacto doble: para Arcos, una fuente sostenible de talento junior calificado y con cultura IT; para los participantes, su primera experiencia laboral real en un entorno corporativo de escala regional. El criterio de selección no es el currículum — es la capacidad de aprender, la actitud y el ajuste con la cultura técnica del equipo.</p>
+      <p>El objetivo es que los colaboradores no solo adquieran experiencia laboral, sino que desarrollen competencias técnicas y profesionales que les permitan construir una carrera sostenible dentro del ecosistema tecnológico.</p>
+    </div>
+    <div>
+      <div class="stat-card fade-up">
+        <div class="stat-number">6 → 3</div>
+        <div class="stat-label">Cohorte de seis ingresantes con confirmación de tres continuidades al cierre del mes 4</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-number">4</div>
+        <div class="stat-label">meses de integración, formación y trabajo real dentro del equipo de Infraestructura</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-number">50%</div>
+        <div class="stat-label">de bonificación del servicio durante el primer mes, sobre los seis ingresantes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALOR -->
+<section id="valor">
+  <div class="section-label">02 · Propuesta de valor</div>
+  <h2>Lo que <em>ganan</em><br>ambas partes</h2>
+  <div class="valor-grid fade-up">
+    <div class="valor-col">
+      <span class="valor-col-title">Para Arcos Dorados</span>
+      <div class="valor-item"><div class="valor-dot"></div><div><strong>Pipeline propio de talento junior calificado</strong><p>Seis perfiles pre-evaluados por Voolkia y validados por el equipo de Infra. Tres se confirman al cierre del mes 4 para continuar dentro del área.</p></div></div>
+      <div class="valor-item"><div class="valor-dot"></div><div><strong>Costo de entrada reducido</strong><p>El primer mes paga el 50% del servicio. Desde el mes 2 se factura el 100% sobre los seis. La estructura comercial absorbe el costo del aprendizaje inicial.</p></div></div>
+      <div class="valor-item"><div class="valor-dot"></div><div><strong>Foco específico en Infraestructura</strong><p>El programa está calibrado para el área: redes, sistemas operativos, cloud, automatización y datos. Sin desvíos de scope.</p></div></div>
+      <div class="valor-item"><div class="valor-dot"></div><div><strong>Cultura IT desde el día uno</strong><p>Los participantes pasan por Voolkia Learning y el Workshop ADN Voolkia. Llegan a Arcos con base técnica y hábitos profesionales formados.</p></div></div>
+      <div class="valor-item"><div class="valor-dot"></div><div><strong>Impacto reputacional y marca empleadora</strong><p>Primer empleo en una compañía pública (NYSE: ARCO) con operación en 21 países. Un programa que la organización puede mostrar puertas afuera.</p></div></div>
+    </div>
+    <div class="valor-col">
+      <span class="valor-col-title">Para los participantes</span>
+      <div class="valor-item"><div class="valor-dot"></div><div><strong>Primer empleo real, no una pasantía</strong><p>Contratación en relación de dependencia desde el primer día, con acceso a cobertura médica y beneficios correspondientes. Voolkia actúa como empleador formal durante todo el programa.</p></div></div>
+      <div class="valor-item"><div class="valor-dot"></div><div><strong>Participación en entornos reales de trabajo</strong><p>Procesos, herramientas y desafíos propios de una operación tecnológica que brinda servicio a 21 países.</p></div></div>
+      <div class="valor-item"><div class="valor-dot"></div><div><strong>Mentoría técnica y acompañamiento humano</strong><p>Un referente del equipo IT de Arcos como mentor y seguimiento personalizado de Voolkia en hitos de 30, 60 y 90 días.</p></div></div>
+      <div class="valor-item"><div class="valor-dot"></div><div><strong>Plan de desarrollo profesional</strong><p>Acceso a Voolkia Learning: contenidos de formación técnica, habilidades blandas y empleabilidad. El programa abre camino a una carrera.</p></div></div>
+      <div class="valor-item"><div class="valor-dot"></div><div><strong>Continuidad concreta</strong><p>El programa está diseñado con foco en la empleabilidad y la continuidad laboral, brindando oportunidades concretas de inserción y desarrollo profesional.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFIL -->
+<section id="perfil">
+  <div class="section-label">03 · Perfil buscado</div>
+  <h2>Jóvenes con <em>ganas</em><br>y base técnica.</h2>
+  <div class="perfil-grid fade-up">
+    <div class="perfil-card">
+      <div class="perfil-icon">🎓</div>
+      <h4>A quién buscamos</h4>
+      <ul>
+        <li>Estudiantes de Sistemas, Informática, Redes, Telecomunicaciones o afines</li>
+        <li>Estudiantes avanzados o egresados recientes</li>
+        <li>Interés genuino en desarrollarse en Infraestructura</li>
+        <li>Disponibilidad full-time, 9 a 18 hs</li>
+      </ul>
+    </div>
+    <div class="perfil-card highlight">
+      <div class="perfil-icon">🛠</div>
+      <h4>Conocimientos básicos</h4>
+      <ul>
+        <li>Programación básica: Python, Java o JavaScript</li>
+        <li>Bases de datos y SQL a nivel inicial</li>
+        <li>Redes, sistemas operativos e infraestructura</li>
+        <li>Nociones de automatización, cloud o DevOps</li>
+        <li>Introducción a datos, ML o IA</li>
+      </ul>
+    </div>
+    <div class="perfil-card arcos">
+      <div class="perfil-icon">⚡</div>
+      <h4>Lo que más pesa</h4>
+      <ul>
+        <li>Ganas reales de aprender y crecer en Infra</li>
+        <li>Proactividad y curiosidad técnica</li>
+        <li>Buena comunicación y trabajo en equipo</li>
+        <li>Orientación a la resolución de problemas</li>
+        <li>Capacidad de adaptación al entorno corporativo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="jd-meta fade-up">
+    <span><b>Departamento:</b> Infraestructura</span>
+    <span><b>Ubicación:</b> Olivos</span>
+    <span><b>Modalidad:</b> Híbrido</span>
+    <span><b>Horario:</b> Full-time, 9 a 18 hs</span>
+    <span><b>Relación laboral:</b> Voolkia como empleador formal</span>
+  </div>
+</section>
+
+<!-- SELECCIÓN -->
+<section id="seleccion">
+  <div class="section-label">04 · Convocatoria & selección</div>
+  <h2>Convocatoria <em>amplia.</em><br>Filtro <em>riguroso.</em></h2>
+
+  <p class="canales-title">Canales de convocatoria</p>
+  <div class="canales-grid fade-up">
+
+    <div class="canal-group">
+      <span class="canal-group-label">Fundaciones</span>
+      <div class="canal-item">
+        <b>Fundación Empujar</b>
+        <span>Convenio activo. Prioridad para personas que más necesitan la oportunidad.</span>
+      </div>
+      <div class="canal-item">
+        <b>Fundación Pescar</b>
+        <span>Talleres de empleo previos con Voolkia. Pipeline activo de talento joven.</span>
+      </div>
+    </div>
+
+    <div class="canal-group">
+      <span class="canal-group-label">Digital</span>
+      <div class="canal-item">
+        <b>LinkedIn</b>
+        <span>Publicación abierta de la búsqueda. Llegada masiva al talento joven IT.</span>
+      </div>
+      <div class="canal-item">
+        <b>Hunting</b>
+        <span>Búsqueda proactiva de perfiles por fuera de los canales abiertos.</span>
+      </div>
+    </div>
+
+    <div class="canal-group">
+      <span class="canal-group-label">Universidades</span>
+      <div class="canal-item">
+        <b>UADE</b>
+        <span>Publicación de la búsqueda en sus portales y participación en ferias institucionales.</span>
+      </div>
+      <div class="canal-item">
+        <b>UCA</b>
+        <span>Difusión a través de la oficina de empleo y los canales internos de la facultad.</span>
+      </div>
+      <div class="canal-item">
+        <b>ORT · UTN</b>
+        <span>Convocatoria activa en los canales institucionales de ambas casas de estudio.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="steps fade-up">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-tag">Etapa 1 · Convocatoria</div>
+        <h3>Apertura de búsqueda</h3>
+        <p>Publicación simultánea en LinkedIn (derivada a TeamTailor para preselección masiva) y comunicación a Fundación Empujar, Fundación Pescar, UADE y UCA. Filtros mínimos: estudiante de carrera técnica afín y disponibilidad full-time 9 a 18 hs.</p>
+        <div class="step-pills">
+          <span class="pill">LinkedIn</span>
+          <span class="pill">TeamTailor</span>
+          <span class="pill arcos">Empujar</span>
+          <span class="pill arcos">Pescar</span>
+          <span class="pill">UADE</span>
+          <span class="pill">UCA</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-tag">Etapa 2 · Entrevista individual</div>
+        <h3>Una conversación uno a uno</h3>
+        <p>Entrevista individual con Selección de Voolkia. Foco en motivación, intereses técnicos, expectativas y fit cultural inicial. La instancia donde se identifica el potencial real más allá del CV — esas ganas que distinguen al candidato.</p>
+        <div class="step-pills">
+          <span class="pill">30 a 45 minutos</span>
+          <span class="pill">Motivación y actitud</span>
+          <span class="pill">Fit cultural</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-tag">Etapa 3 · Assessment Center grupal</div>
+        <h3>Habilidades en contexto</h3>
+        <p>Encuentro grupal de 10 a 12 participantes por sesión, de 2,5 a 3 horas. A través de dinámicas individuales y de equipo se evalúan competencias blandas y potencial. Es la instancia central del proceso — donde el filtro real ocurre.</p>
+        <div class="step-highlight">10 a 12 personas · 2,5 a 3 horas · Dinámicas individuales y grupales</div>
+        <div class="step-pills">
+          <span class="pill accent">Comunicación</span>
+          <span class="pill accent">Trabajo colaborativo</span>
+          <span class="pill accent">Liderazgo</span>
+          <span class="pill accent">Capacidad de análisis</span>
+          <span class="pill accent">Resolución de problemas</span>
+          <span class="pill accent">Toma de decisiones</span>
+          <span class="pill accent">Escucha activa</span>
+          <span class="pill accent">Adaptación</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-tag">Etapa 4 · Validación con Arcos</div>
+        <h3>Entrevista final con el área</h3>
+        <p>Los finalistas son presentados al equipo de Infraestructura de Arcos para validación. Esta instancia confirma alineación técnica, vínculo con los mentores asignados y aceptación final por parte de Arcos. Sin esta aprobación no hay ingreso.</p>
+        <div class="step-pills">
+          <span class="pill arcos">Aprobación de Arcos</span>
+          <span class="pill">Asignación de mentor</span>
+          <span class="pill">Confirmación de ingreso</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <div class="step-tag">Etapa 5 · Ingreso</div>
+        <h3>Incorporación de la cohorte</h3>
+        <p>Seis personas ingresan en relación de dependencia con Voolkia como empleador formal. Mentor interno designado, accesos y entorno de trabajo listos antes del día uno. Arranca el programa de integración y desarrollo.</p>
+        <div class="step-pills">
+          <span class="pill accent">Cohorte = 6 personas</span>
+          <span class="pill">Relación laboral desde el día 1</span>
+          <span class="pill">Mentor designado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMA -->
+<section id="programa">
+  <div class="section-label">05 · Programa de Integración y Desarrollo</div>
+  <h2>4 meses.<br>Una trayectoria<br><em>guiada.</em></h2>
+  <div class="timeline">
+
+    <div class="fase fade-up">
+      <div class="fase-marker"><div class="fase-dot">1</div></div>
+      <div class="fase-body">
+        <div class="fase-timing">Mes 1 · Onboarding</div>
+        <h3>Aterrizaje en Voolkia y Arcos</h3>
+        <p>El primer mes está enfocado en integración cultural, técnica y operativa. Los seis colaboradores ingresan a la vez y atraviesan el onboarding como cohorte, lo que genera vínculo y soporte mutuo.</p>
+        <div class="fase-items">
+          <div class="fase-item">Onboarding Voolkia: cultura, valores, procesos y herramientas</div>
+          <div class="fase-item">Onboarding al ecosistema Arcos: ADvance, estructura IT, accesos</div>
+          <div class="fase-item">Workshop ADN Voolkia: expectativas y formas de trabajo</div>
+          <div class="fase-item">Asignación de mentor interno + plan de desarrollo individual</div>
+          <div class="fase-item">Voolkia Learning: arranque del campus de formación</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fase fade-up">
+      <div class="fase-marker"><div class="fase-dot">2</div></div>
+      <div class="fase-body">
+        <div class="fase-timing">Mes 2 · Inmersión</div>
+        <h3>Trabajo real y conexión con el negocio</h3>
+        <p>Los colaboradores empiezan a tomar responsabilidades reales dentro del equipo de Infraestructura, con foco en consolidar la base técnica y entender el negocio de Arcos en profundidad.</p>
+        <div class="fase-items">
+          <div class="fase-item">Workshop Cliente / Industria co-construido con Arcos</div>
+          <div class="fase-item">Asignación a proyectos reales del área de Infra</div>
+          <div class="fase-item">Seguimiento 30 días: adaptación e inquietudes</div>
+          <div class="fase-item">Voolkia Learning: módulos técnicos específicos</div>
+        </div>
+        <div class="fase-quote">El Workshop Cliente / Industria acerca a los participantes al negocio, la industria, los desafíos del cliente y el contexto en el que desarrollan su experiencia profesional.</div>
+      </div>
+    </div>
+
+    <div class="fase fade-up">
+      <div class="fase-marker"><div class="fase-dot">3</div></div>
+      <div class="fase-body">
+        <div class="fase-timing">Mes 3 · Consolidación</div>
+        <h3>Mentoría y desarrollo de competencias</h3>
+        <p>Tercer mes: foco en mentoría activa y articulación con referentes técnicos del equipo de Infra. Es la instancia donde se construyen las competencias profesionales que sustentan una carrera.</p>
+        <div class="fase-items">
+          <div class="fase-item">Mentoría y acompañamiento con referentes técnicos</div>
+          <div class="fase-item">Seguimiento 60 días: revisión de desempeño y ajustes</div>
+          <div class="fase-item">Mayor autonomía en tareas y primeras responsabilidades end-to-end</div>
+          <div class="fase-item">Feedback estructurado del mentor como insumo para el mes 4</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fase fade-up">
+      <div class="fase-marker"><div class="fase-dot">4</div></div>
+      <div class="fase-body">
+        <div class="fase-timing">Mes 4 · Definición</div>
+        <h3>Medición de experiencia y confirmación</h3>
+        <p>Cierre del programa de integración. Voolkia y Arcos revisan la evolución de cada colaborador en conjunto y se confirma la continuidad de tres perfiles dentro del equipo de Infraestructura.</p>
+        <div class="fase-items">
+          <div class="fase-item">Seguimiento 90 días: evaluación consolidada del trimestre</div>
+          <div class="fase-item">Medición de experiencia y feedback de cada participante</div>
+          <div class="fase-item">Sesión de decisión conjunta Voolkia + IT Lead de Arcos</div>
+          <div class="fase-item">Confirmación de 3 continuidades · cierre de 3 participaciones</div>
+        </div>
+        <div class="fase-quote">El cierre del mes 4 se construye con información acumulada durante 90 días de seguimiento estructurado. No hay sorpresas — hay decisión informada.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EVALUACIÓN -->
+<section id="evaluacion">
+  <div class="section-label">06 · Seguimiento individual</div>
+  <h2>Hitos de <em>30, 60 y 90</em> días.</h2>
+  <div class="eval-grid fade-up">
+    <div class="eval-card">
+      <div class="eval-num">30</div>
+      <div class="eval-timing">Mes 2 · Adaptación</div>
+      <h3>¿Cómo se sienten?</h3>
+      <p>Primer hito formal. Foco en aterrizaje cultural y operativo: ¿está cómodo? ¿entiende qué hace? ¿el mentor está cerca? Detección temprana de cualquier alerta.</p>
+    </div>
+    <div class="eval-card">
+      <div class="eval-num">60</div>
+      <div class="eval-timing">Mes 3 · Desempeño</div>
+      <h3>¿Cómo evolucionan?</h3>
+      <p>Segundo hito. Foco en evolución técnica y de competencias profesionales. Ajustes al plan de desarrollo. Feedback del mentor y autopercepción del colaborador.</p>
+    </div>
+    <div class="eval-card">
+      <div class="eval-num">90</div>
+      <div class="eval-timing">Mes 4 · Definición</div>
+      <h3>¿Quiénes continúan?</h3>
+      <p>Hito final. Evaluación consolidada del trimestre completo. Insumo principal para la decisión conjunta Voolkia + Arcos sobre las tres continuidades.</p>
+    </div>
+  </div>
+  <div class="eval-note fade-up">
+    El seguimiento individual es la columna vertebral del programa. Cada colaborador atraviesa tres instancias estructuradas de feedback bidireccional, donde se mide adaptación, desempeño e inquietudes. La decisión del mes 4 se construye con datos, no con impresiones.
+  </div>
+</section>
+
+<!-- COMERCIAL -->
+<section id="comercial">
+  <div class="section-label">07 · Modelo comercial</div>
+  <h2>Una estructura <em>simple.</em><br>Sin sorpresas.</h2>
+  <p style="color: var(--muted); font-size: 16px; max-width: 720px; margin-bottom: 40px; line-height: 1.7;">El modelo está pensado para absorber el costo del aprendizaje inicial y mantener una previsibilidad clara durante todo el programa. La estructura se enmarca dentro del MSA Voolkia–ADASA vigente.</p>
+
+  <div class="comercial-grid fade-up">
+    <div class="comercial-cell">
+      <b>6</b>
+      <div class="desc">Colaboradores que ingresan a la cohorte. Todos contratados por Voolkia en relación de dependencia, asignados al equipo de Infra de Arcos.</div>
+    </div>
+    <div class="comercial-cell">
+      <b>50%</b>
+      <div class="desc">Bonificación del servicio durante el primer mes. Arcos paga la mitad del costo mientras la cohorte completa su onboarding.</div>
+    </div>
+    <div class="comercial-cell">
+      <b>100%</b>
+      <div class="desc">Tarifa normal del servicio desde el mes 2 y hasta el cierre del mes 4, sobre la totalidad de los seis ingresantes activos.</div>
+    </div>
+    <div class="comercial-cell">
+      <b>3</b>
+      <div class="desc">Colaboradores que continúan dentro del equipo de Infra de Arcos. Sobre ellos se mantiene la tarifa normal del servicio por un mínimo de 12 meses totales desde el ingreso.</div>
+    </div>
+  </div>
+
+  <div class="comercial-note fade-up">
+    <b>Resumen del esquema.</b> Mes 1: 50% del servicio por los 6 colaboradores · Mes 2 a 4: 100% del servicio por los 6 colaboradores · Cierre del mes 4: 3 colaboradores confirman continuidad y se mantiene la tarifa normal del servicio sobre ellos por un mínimo de 12 meses totales desde el ingreso. Los valores específicos y las condiciones de facturación se definen sobre el MSA Voolkia–ADASA vigente. Abierto a revisar el detalle con el equipo comercial de Voolkia.
+  </div>
+</section>
+
+<!-- VOOLKIA -->
+<section id="voolkia">
+  <div class="section-label">08 · Por qué Voolkia</div>
+  <h2>El partner <em>indicado</em><br>para este programa.</h2>
+  <div class="voolkia-grid fade-up">
+    <div class="voolkia-card">
+      <h4>Conocimiento profundo de la cuenta</h4>
+      <p>Voolkia opera con Arcos Dorados bajo MSA vigente. Conocemos los equipos, el stack, el área de Infra y los criterios técnicos del equipo de Adrián. La búsqueda no es genérica — está calibrada.</p>
+    </div>
+    <div class="voolkia-card">
+      <h4>Selección con foco real</h4>
+      <p>El Assessment Center grupal es nuestro filtro central. Evaluamos competencias blandas y potencial — no respuestas memorizadas. Fundaciones, LinkedIn y universidades garantizan diversidad y volumen.</p>
+    </div>
+    <div class="voolkia-card">
+      <h4>People & Performance Care end-to-end</h4>
+      <p>Voolkia no se limita a colocar talento. Tenemos un área dedicada a acompañar el ciclo completo: onboarding, formación, mentoría y seguimiento 30/60/90. Es lo que hace que un primer empleo termine bien.</p>
+    </div>
+    <div class="voolkia-card">
+      <h4>Voolkia Learning como activo del programa</h4>
+      <p>Cada participante accede al campus de formación técnica y profesional de Voolkia, alineado al plan de desarrollo individual. Es el motor que sostiene la curva de aprendizaje de los primeros meses.</p>
+    </div>
+    <div class="voolkia-card">
+      <h4>Marco contractual claro</h4>
+      <p>Voolkia es el empleador formal. Todas las obligaciones laborales, previsionales, salariales y de cobertura de salud están bajo nuestro paraguas. Arcos recibe el servicio sin asumir contingencias.</p>
+    </div>
+    <div class="voolkia-card">
+      <h4>Compromiso de impacto social</h4>
+      <p>Prioridad de convocatoria para perfiles de Fundación Empujar y Fundación Pescar. Un programa con impacto técnico real para Arcos y con impacto social tangible para los participantes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-block">
+  <h2>¿Avanzamos?</h2>
+  <p>Esta propuesta puede arrancar con una cohorte piloto de seis colaboradores en cuanto Arcos defina la ventana de ingreso. Voolkia activa la convocatoria y, en 4 semanas, está listo el primer Assessment Center. Estamos disponibles para revisar la propuesta, ajustar el perfil con el equipo de Infra y cerrar el cronograma.</p>
+  <div class="cta-badge">Voolkia × Arcos Dorados · Sprint IT Primer Empleo · 2026</div>
+</div>
+
+<footer>
+  <span>Voolkia × Arcos Dorados — Sprint IT Primer Empleo 2026</span>
+  <span>Documento confidencial · Uso interno · Borrador no vinculante</span>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
